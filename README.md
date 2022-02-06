@@ -1,3 +1,6 @@
+Папка backend должна иметь хост http://backend/
+
+
 Backend:
 
 1) composer install
