@@ -25,7 +25,12 @@
 			</div>
 		</div>
 		<div class="mb-1" v-if="error">
-			<div class="alert alert-danger" role="alert">
+			<div class="alert alert-danger" role="alert" v-if="error.response && error.response.data.errors">
+				<div v-for="error in error.response.data.errors">
+					{{ error }}
+				</div>
+			</div>
+			<div class="alert alert-danger" role="alert" v-else>
 				{{ error }}
 			</div>
 		</div>
@@ -84,6 +89,7 @@ export default {
 					this.error = null;
 					this.isLoading = false;
 
+					console.log("RESPONSE", response.data);
 					if (response.data.id && !this.item.id) {
 						this.$router.push({ name: "product", params: { id: response.data.id } });
 					}
@@ -99,7 +105,9 @@ export default {
 			if (product_id) {
 				this.getProduct(product_id);
 			} else {
-				this.item = {};
+				this.item = {
+					title: null,
+				};
 			}
 		},
 	},
